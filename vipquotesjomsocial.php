@@ -103,6 +103,11 @@ class plgContentVipQuotesJomSocial extends JPlugin {
             if($this->params->get("add_activity", 0)) {
                 if(!empty($item->id) AND $item->published AND ($isNew OR $isChangedState)) {
                     $this->addActivity($item);
+                    
+                    if($this->params->get("send_notification", 0) AND $isChangedState) {
+                        $this->sendNotification($item);
+                    }
+                    
                 }
             }
             
@@ -122,21 +127,24 @@ class plgContentVipQuotesJomSocial extends JPlugin {
         // Create activity stream object.
         jimport("itprism.integrate.activity.jomsocial");
         $activity = new ITPrismIntegrateActivityJomSocial($item->user_id, $content);
-        $activity->setType("com_vipquotes.quote.post");
-        $activity->store();
-            
+        $activity
+            ->setDb(JFactory::getDbo())
+            ->setApp("com_vipquotes.post")
+            ->store();
     }
     
     protected function sendNotification($item) {
         
-        $note    = JText::_("PLG_CONTENT_VIPQUOTESJOMSOCIAL_NOTIFICATION_PUBLISHED");
+        $content    = JText::_("PLG_CONTENT_VIPQUOTESJOMSOCIAL_NOTIFICATION_PUBLISHED");
         
         // Create notification.
         jimport("itprism.integrate.notification.jomsocial");
-        $activity = new ITPrismIntegrateNotificationJomSocial($item->user_id, $note);
-        $activity->setType("notif_system_messaging");
-        $activity->setActor($this->params->get("notification_actor", 0));
-        $activity->send();
-            
+        $notification = new ITPrismIntegrateNotificationJomSocial($item->user_id, $content);
+        $notification
+            ->setDb(JFactory::getDbo())
+            ->setCmdType("notif_system_messaging")
+            ->setActorId($this->params->get("notification_actor", 0))
+            ->send();
+        
     }
 }

@@ -7,7 +7,7 @@
     <authorEmail>todor@itprism.com</authorEmail>
     <authorUrl>http://itprism.com</authorUrl>
     <version>1.0</version>
-    <creationDate>07 January, 2014</creationDate>
+    <creationDate>07 Februrary, 2014</creationDate>
     <description><![CDATA[
     <p>Content - VipQuotes - JomSocial is a plugin that sends notifications and adds activity records to users' stream.</p>
     <p><a href="http://itprism.com/" target="_blank">Subscribe for the newsletter</a> to receive information about updates and new ITPrism extensions.</p>
@@ -25,7 +25,7 @@
     
     <config>
 		<fields name="params">
-			<fieldset name="basic" addfieldpath="/administrator/components/com_vipquotes/models/fields">
+			<fieldset name="basic">
                 
                 <field name="add_activity" type="radio" default="1" label="PLG_CONTENT_VIPQUOTESJOMSOCIAL_ACTIVITY_STREAM" description="PLG_CONTENT_VIPQUOTESJOMSOCIAL_ACTIVITY_STREAM_DESC" class="btn-group" >
                    <option value="0">JNO</option>
